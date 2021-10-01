@@ -1,4 +1,4 @@
-import { addListener, removeListener, callListeners } from '../utils/listenerHelper';
+import { addListener, callListeners, removeListener } from '../utils/listenerHelper';
 
 let listeners = [];
 let preferences = {};
