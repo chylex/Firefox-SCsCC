@@ -25,17 +25,18 @@ export const cleanPrice = (price) => {
   // remove currency symbols and spaces
   let cleanedPrice = price.replace(cleanSymbPatt, '');
 
-  // if no decimal separator
-  // remove possible "." or "," thousand separators
-  if (!/(\.|,)\d{1,2}$/.test(cleanedPrice)) cleanedPrice = cleanedPrice.replace(/\.|,/g, '');
-  // if decimal separator is "."
-  // remove possible "," thousand separators
-  else if (/\.\d{1,2}$/.test(cleanedPrice)) cleanedPrice = cleanedPrice.replace(/,/g, '');
-  // if decimal separptor is ","
-  else {
-    // remove possible "." thousand separators
-    cleanedPrice = cleanedPrice.replace(/\./g, '');
-    // replace dec separator to "."
+  // remove thousand separator
+  const countDots = cleanedPrice.split('.').length - 1;
+  const countCommas = cleanedPrice.split(',').length - 1;
+  if (countDots > 1) {
+    cleanedPrice = cleanedPrice.replace(/\\./g, '');
+  }
+  if (countCommas > 1) {
+    cleanedPrice = cleanedPrice.replace(/,/g, '');
+  }
+
+  // normalize decimal separator
+  if (countCommas === 1) {
     cleanedPrice = cleanedPrice.replace(/,/g, '.');
   }
 
