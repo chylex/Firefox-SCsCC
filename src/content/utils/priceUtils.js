@@ -22,25 +22,8 @@ export const checkPriceSpecCases = (txt, match) => {
 };
 
 export const cleanPrice = (price) => {
-  // remove currency symbols and spaces
-  let cleanedPrice = price.replace(cleanSymbPatt, '');
-
-  // remove thousand separator
-  const countDots = cleanedPrice.split('.').length - 1;
-  const countCommas = cleanedPrice.split(',').length - 1;
-  if (countDots > 1) {
-    cleanedPrice = cleanedPrice.replace(/\\./g, '');
-  }
-  if (countCommas > 1) {
-    cleanedPrice = cleanedPrice.replace(/,/g, '');
-  }
-
-  // normalize decimal separator
-  if (countCommas === 1) {
-    cleanedPrice = cleanedPrice.replace(/,/g, '.');
-  }
-
-  return cleanedPrice;
+  // remove currency symbols, spaces, and thousand separator
+  return price.replace(cleanSymbPatt, '').replace(/,/g, '');
 };
 
 export const formatPrice = (price, preferences) => {
