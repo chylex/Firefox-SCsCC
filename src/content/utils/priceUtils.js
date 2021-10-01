@@ -45,14 +45,24 @@ export const cleanPrice = (price) => {
 
 export const formatPrice = (price, preferences) => {
   // set rounding
-  let formattedPrice = (preferences.round) ? price.toFixed(0) : price.toFixed(2);
+  let formattedPrice;
+  if (preferences.round || Math.abs(price) >= 10) {
+    formattedPrice = price.toFixed(0);
+  } else if (Math.abs(price) >= 1) {
+    formattedPrice = price.toFixed(1);
+  } else {
+    const log10 = price ? Math.floor(Math.log10(price)) : 0;
+    const div = log10 < 0 ? 10 ** (1 - log10) : 100;
+    formattedPrice = (Math.round(price * div) / div).toString();
+  }
 
   // set decimal separator
   if (preferences.sepDec !== '.') formattedPrice = formattedPrice.replace('.', preferences.sepDec);
 
   // set thousand separator
   if (preferences.sepTho !== '') {
-    for (let i = ((preferences.round) ? formattedPrice.length : formattedPrice.indexOf(preferences.sepDec)) - 3; i > 0; i -= 3) {
+    const sepDecIndex = formattedPrice.indexOf(preferences.sepDec);
+    for (let i = sepDecIndex === -1 ? formattedPrice.length : sepDecIndex - 3; i > 0; i -= 3) {
       formattedPrice = formattedPrice.slice(0, i) + preferences.sepTho + formattedPrice.slice(i);
     }
   }
