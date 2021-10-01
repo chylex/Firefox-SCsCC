@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "run:webpack": "cross-env NODE_ENV=development webpack --watch",
-    "run:web-ext": "web-ext run -s dist",
+    "run:web-ext": "web-ext run --firefox=firefoxdeveloperedition -s dist",
     "build:webpack": "cross-env NODE_ENV=production webpack",
     "build:web-ext": "web-ext build -o -s dist -a build",
     "start": "npm-run-all clean run:webpack",
