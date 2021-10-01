@@ -1,6 +1,6 @@
 const styleElem = document.createElement('style');
 styleElem.textContent = 'data.scscc {\n'
-  + '  padding: 0 2px !important;\n'
+  + '  padding: 0 3px !important;\n'
   + '  color: inherit !important;\n'
   + '  white-space: pre !important;\n'
   + '  border-width: 0 1px !important;\n'
